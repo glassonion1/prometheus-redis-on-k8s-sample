@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - port: 6379
+    name: port-redis
+  - port: 9121
+    name: port-redis-exporter
+  selector:
+    redis-app: redis

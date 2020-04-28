@@ -1,0 +1,14 @@
+resources:
+- redis-service.yaml
+- redis-ss.yaml
+- prom-service.yaml
+- prom-deployment.yaml
+configMapGenerator:
+- name: redis-config
+  files:
+    - launch.sh
+    - redis.conf
+- name: prometheus-config
+  namespace: stats
+  files:
+    - prometheus.yaml

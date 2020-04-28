@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: stats
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: stats
+spec:
+  type: LoadBalancer
+  selector:
+    app: prometheus
+  ports:
+  - name: port-prometheus
+    port: 9090
+    targetPort: 9090

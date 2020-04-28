@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+spec:
+  serviceName: redis
+  selector:
+    matchLabels:
+      redis-app: redis
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        redis-app: redis
+    spec:
+      initContainers:
+      - image: busybox:latest
+        name: redis-init
+        command: [sh, -c, cp -L /tmp/* /config]
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /config
+          name: config
+      containers:
+      - name: redis
+        command: [sh, -c, source /config/launch.sh]
+        image: redis:5-alpine
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /redis-data
+          name: data
+      - name: redis-exporter
+        image: oliver006/redis_exporter:latest
+        ports:
+        - containerPort: 9121
+      volumes:
+      - configMap:
+          name: redis-config
+        name: tmp
+      - emptyDir:
+        name: config
+      - emptyDir:
+        name: data
