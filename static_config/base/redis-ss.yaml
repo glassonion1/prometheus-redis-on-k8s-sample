@@ -13,15 +13,6 @@ spec:
       labels:
         redis-app: redis
     spec:
-      initContainers:
-      - image: busybox:latest
-        name: redis-init
-        command: [sh, -c, cp -L /tmp/* /config]
-        volumeMounts:
-        - mountPath: /tmp
-          name: tmp
-        - mountPath: /config
-          name: config
       containers:
       - name: redis
         command: [sh, -c, source /config/launch.sh]
@@ -40,8 +31,6 @@ spec:
       volumes:
       - configMap:
           name: redis-config
-        name: tmp
-      - emptyDir:
         name: config
       - emptyDir:
         name: data

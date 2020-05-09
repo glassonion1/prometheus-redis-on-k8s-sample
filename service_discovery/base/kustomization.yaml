@@ -3,6 +3,7 @@ resources:
 - redis-ss.yaml
 - prom-service.yaml
 - prom-deployment.yaml
+- rbac.yaml
 configMapGenerator:
 - name: redis-config
   files:
