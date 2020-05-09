@@ -1,1 +1,1 @@
-# prometheus-redis-sample
+# prometheus-redis-on-kubernetes-sample
